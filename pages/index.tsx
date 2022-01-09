@@ -28,11 +28,15 @@ const IndexPage = ({products}) => {
         </Link>
       </p>
       <div>
-        <h4>Cart</h4>
+        <h4>Cart  {`${cart.length} items selected`}</h4>
         {cart.map((item, i) => (
-          <li key={i} > {item} </li>
+          <li key={i} > {item}   <button>remove</button></li>
         ))}
-        <p>Total price = {amount}</p>
+        {
+          amount != 0 && (
+            <p>Total price = {amount}</p>
+          )
+        }
       </div>
       <ul>
         {
@@ -41,15 +45,6 @@ const IndexPage = ({products}) => {
               key={i} 
               item={p}
               handleUpdateAmount={ (title, price,operator) => handleAddToCart(title, price,operator)}/>
-            // <li key={i} >
-            //   <p>{ p.title }</p>
-            //   <p>{ p.price }</p>
-            //   {
-            //     !reduce ? 
-            //     <button  onClick={ () => handleAddToCart(p.price)} >Add to Cart</button>
-            //     : <button  onClick={ () => handleRemoveToCart(p.price)} >Remove to Cart</button>
-            //   }
-            // </li>
           ))
         }
       </ul>

@@ -1,18 +1,35 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import Product from './Product'
 
-test('renders content', () => {
+
+describe('<Product />', () => {
+  let component
+
   const product = {
-      title: 'this is a test',
-      price: 2
+    title: 'this is a test',
+    price: 2
   }
 
-  const component = render(<Product item={product} />)
+  const mockHandler = jest.fn()
 
-  component.getByText('this is a test')
-  // console.log(component)
+  beforeEach(() => {
+    component =  render(
+      <Product item={product} handleUpdateAmount={mockHandler} />
+    )
+  })
+
+  test('renders component', () => {
+    component.getByText('this is a test')
+  })
+  
+  test('clicking the buton event handler once', () => {
+    const button = component.getByText('Add to Cart')
+    fireEvent.click(button)
+    expect(mockHandler).toHaveBeenCalledTimes(1)
+    
+    component.getByText('Remove to Cart')
+  })
+
 })
-
-// test('clicking the buton class event handler once')
